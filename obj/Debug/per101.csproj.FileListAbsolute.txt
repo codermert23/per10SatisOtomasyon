@@ -1,0 +1,12 @@
+C:\Users\zeynep\source\repos\per101\per101\bin\Debug\per101.exe.config
+C:\Users\zeynep\source\repos\per101\per101\bin\Debug\per101.exe
+C:\Users\zeynep\source\repos\per101\per101\bin\Debug\per101.pdb
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.csproj.AssemblyReference.cache
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.giris_form.resources
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.Properties.Resources.resources
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.csproj.GenerateResource.cache
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.csproj.CoreCompileInputs.cache
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.exe
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.pdb
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.ÜRÜNLER.resources
+C:\Users\zeynep\source\repos\per101\per101\obj\Debug\per101.Form2.resources
