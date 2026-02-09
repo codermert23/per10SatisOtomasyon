@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace per101
 {
     public partial class AYARLAR : Form
     {
-        SqlConnection baglanti = new SqlConnection(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=per10Database;Persist Security Info=True;User ID=sa;Password=1;Encrypt=True;TrustServerCertificate=True");
+        SqlConnection baglanti = new SqlConnection(@"Data Source=DESKTOP-J12SMF4\SQLEXPRESS;Initial Catalog=per10Database;Integrated Security=True;TrustServerCertificate=True");
         public AYARLAR()
         {
             InitializeComponent();
@@ -353,6 +354,35 @@ namespace per101
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void VerileriYenile()
+        {
+            
+        }
+
+        private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void dateTimePicker4_ValueChanged(object sender, EventArgs e)
+        {
+            
         }
     }
     }
