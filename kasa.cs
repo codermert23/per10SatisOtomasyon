@@ -80,7 +80,7 @@ namespace per101
         {
 
         }
-        SqlConnection baglanti = new SqlConnection(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=per10Database;Persist Security Info=True;User ID=sa;Password=1;Encrypt=True;TrustServerCertificate=True");
+        SqlConnection baglanti = new SqlConnection(@"Data Source=DESKTOP-J12SMF4\SQLEXPRESS;Initial Catalog=per10Database;Integrated Security=True;TrustServerCertificate=True");
         private void button1_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -136,59 +136,11 @@ namespace per101
 
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e) { SepeteEkle(); }
 
-        private void button10_Click(object sender, EventArgs e) { textBox1.Text = "1"; }
-        private void button11_Click(object sender, EventArgs e) { textBox1.Text = "2"; }
-        private void button12_Click(object sender, EventArgs e) { textBox1.Text = "3"; }
-        private void button15_Click(object sender, EventArgs e) { textBox1.Text = "4"; }
-        private void button14_Click(object sender, EventArgs e) { textBox1.Text = "5"; }
-        private void button13_Click(object sender, EventArgs e) { textBox1.Text = "6"; }
-        private void button18_Click(object sender, EventArgs e) { textBox1.Text = "7"; }
-        private void button17_Click(object sender, EventArgs e) { textBox1.Text = "8"; }
-        private void button16_Click(object sender, EventArgs e) { textBox1.Text = "9"; }
-        private void button19_Click(object sender, EventArgs e) { textBox1.Text = "0"; }
-        private void button20_Click(object sender, EventArgs e) { textBox1.Clear(); }
-
+        
         private void button22_Click_1(object sender, EventArgs e)
         {
 
-            // 1. Sepette bir ürün seçili mi kontrol et
-            if (listView2.SelectedItems.Count > 0)
-            {
-                if (!string.IsNullOrEmpty(textBox1.Text) && listView2.SelectedItems.Count > 0)
-                {
-                    // 1. Adedi sütuna yaz
-                    listView2.SelectedItems[0].SubItems[2].Text = textBox1.Text;
-
-                    // 2. Dönüşümleri yap (Para birimi için decimal her zaman daha güvenlidir)
-                    decimal adet = Convert.ToDecimal(textBox1.Text);
-                    decimal birimFiyat = Convert.ToDecimal(listView2.SelectedItems[0].SubItems[1].Text);
-
-                    // 3. Çarpma işlemini yap
-                    decimal toplam = adet * birimFiyat;
-
-                    // 4. 4. sütun (indeks 3) kontrolü ve yazdırma
-                    if (listView2.SelectedItems[0].SubItems.Count > 3)
-                    {
-                        listView2.SelectedItems[0].SubItems[3].Text = toplam.ToString("N2");
-                    }
-                    else
-                    {
-                        listView2.SelectedItems[0].SubItems.Add(toplam.ToString("N2"));
-                    }
-
-                    textBox1.Clear();
-                    textBox1.Focus(); // İmleci tekrar kutuya atar, seri işlem sağlar
-                    ToplamHesapla();
-                }
-                else
-                {
-                    MessageBox.Show("Lütfen önce bir adet girin!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Lütfen sepetten bir ürün seçin!");
-            }
+          
         }
 
         private void button21_Click(object sender, EventArgs e)
@@ -198,6 +150,7 @@ namespace per101
             decimal fiyat = Convert.ToDecimal(temizMetin);
             decimal sonfiyat = fiyat - indirim;
             label4.Text = Convert.ToString(sonfiyat.ToString() + " TL");
+            textBox2.Clear();
         }
 
         private void adetsil_Click(object sender, EventArgs e)
@@ -226,7 +179,7 @@ namespace per101
 
         private void odemeButon_Click(object sender, EventArgs e)
         {
-         
+
             if (listView2.Items.Count == 0) return;
 
             try
@@ -263,13 +216,13 @@ namespace per101
                     }
                 }
 
-                MessageBox.Show("Satış Sepet olarak kaydedildi!");
+                MessageBox.Show("Ödeme Başarılı!");
                 listView2.Items.Clear();
                 ToplamHesapla();
             }
             catch (Exception ex) { MessageBox.Show("Hata: " + ex.Message); }
             finally { baglanti.Close(); }
-        }       
+        }
 
         private void satisgeri_Click(object sender, EventArgs e)
         {
@@ -615,6 +568,17 @@ namespace per101
             {
                 baglanti.Close();
             }
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            AYARLAR form2 = new AYARLAR();
+            this.Hide();
+            form2.ShowDialog();
+            this.Show();
+
+            
+
         }
     }
 }
