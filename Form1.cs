@@ -36,8 +36,8 @@ namespace per101
         {
            this.Close();
         }
-        public string id = "";
-        public string sifre = "";
+        public string id = "peronyıkama";
+        public string sifre = "per1023";
 
         private async void giris_buton_Click(object sender, EventArgs e)
         {

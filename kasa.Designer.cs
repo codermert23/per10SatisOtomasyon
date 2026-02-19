@@ -75,7 +75,7 @@
             this.label1.Font = new System.Drawing.Font("Impact", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.Location = new System.Drawing.Point(16, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 45);
+            this.label1.Size = new System.Drawing.Size(120, 37);
             this.label1.TabIndex = 0;
             this.label1.Text = "ÜRÜNLER";
             // 
@@ -245,6 +245,7 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // columnHeader1
@@ -336,7 +337,7 @@
             this.satisgeri.BackColor = System.Drawing.Color.OldLace;
             this.satisgeri.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.satisgeri.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.satisgeri.Location = new System.Drawing.Point(1223, 172);
+            this.satisgeri.Location = new System.Drawing.Point(1223, 453);
             this.satisgeri.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.satisgeri.Name = "satisgeri";
             this.satisgeri.Size = new System.Drawing.Size(111, 41);
@@ -350,14 +351,14 @@
             this.adetsil.BackColor = System.Drawing.Color.OrangeRed;
             this.adetsil.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.adetsil.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.adetsil.Font = new System.Drawing.Font("Franklin Gothic Medium", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.adetsil.Font = new System.Drawing.Font("Franklin Gothic Medium", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.adetsil.ForeColor = System.Drawing.Color.Black;
-            this.adetsil.Location = new System.Drawing.Point(1223, 121);
+            this.adetsil.Location = new System.Drawing.Point(1223, 502);
             this.adetsil.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.adetsil.Name = "adetsil";
             this.adetsil.Size = new System.Drawing.Size(111, 43);
             this.adetsil.TabIndex = 22;
-            this.adetsil.Text = "SİL";
+            this.adetsil.Text = "SEPETTEN ÇIKAR";
             this.adetsil.UseVisualStyleBackColor = false;
             this.adetsil.Click += new System.EventHandler(this.adetsil_Click);
             // 
@@ -367,7 +368,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.Location = new System.Drawing.Point(22, 116);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 29);
+            this.label2.Size = new System.Drawing.Size(100, 24);
             this.label2.TabIndex = 0;
             this.label2.Text = "TOPLAM:";
             // 
@@ -415,7 +416,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label3.Location = new System.Drawing.Point(23, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 22);
+            this.label3.Size = new System.Drawing.Size(75, 18);
             this.label3.TabIndex = 22;
             this.label3.Text = "İNDİRİM:";
             // 
@@ -427,7 +428,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(185, 92);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 29);
+            this.label4.Size = new System.Drawing.Size(0, 24);
             this.label4.TabIndex = 23;
             // 
             // groupBox4
@@ -455,7 +456,7 @@
             this.button22.BackColor = System.Drawing.Color.LightGreen;
             this.button22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button22.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button22.Location = new System.Drawing.Point(1223, 346);
+            this.button22.Location = new System.Drawing.Point(1223, 328);
             this.button22.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(111, 33);
@@ -482,17 +483,18 @@
             this.button10.BackColor = System.Drawing.Color.OrangeRed;
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button10.Location = new System.Drawing.Point(1223, 387);
+            this.button10.Location = new System.Drawing.Point(1223, 369);
             this.button10.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(111, 33);
             this.button10.TabIndex = 27;
             this.button10.Text = "-";
             this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // ÜRÜNLER
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;

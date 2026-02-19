@@ -28,7 +28,7 @@ namespace per101
                 }
             }
 
-            // Sonucu Label4'e profesyonel formatta yazdır
+           
             label4.Text = genelToplam.ToString("N2") + " TL";
         }
         private void SepeteEkle()
@@ -46,10 +46,10 @@ namespace per101
 
                 string secilenID = secilen.Tag.ToString();
 
-                // --- MÜKERRER KONTROLÜ (GÜNCELLENDİ) ---
+               
                 foreach (ListViewItem sepetItem in listView2.Items)
                 {
-                    // Sepetteki her ürünün ID'si ile seçilen ID'yi karşılaştır
+                    
                     if (sepetItem.Tag != null && sepetItem.Tag.ToString() == secilenID)
                     {
                         MessageBox.Show("Bu ürün zaten sepette var!", "Uyarı");
@@ -80,7 +80,7 @@ namespace per101
         {
 
         }
-        SqlConnection baglanti = new SqlConnection(@"Data Source=DESKTOP-J12SMF4\SQLEXPRESS;Initial Catalog=per10Database;Integrated Security=True;TrustServerCertificate=True");
+        SqlConnection baglanti = new SqlConnection(@"Data Source=MertPC\SQLEXPRESS;Initial Catalog=per10Database;User ID=sa;Password=1;Encrypt=True;TrustServerCertificate=True");
         private void button1_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -101,13 +101,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
+                   if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
                     ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
                     ekle.SubItems.Add(oku["SatisFiyati"].ToString());
                     ekle.SubItems.Add(oku["MevcutStok"].ToString());
                     ekle.Tag = oku["UrunID"].ToString();
                     // Listeye ekliyoruz
                     listView1.Items.Add(ekle);
+                    }
+                   
                 }
                 oku.Close();
             }
@@ -137,10 +140,49 @@ namespace per101
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e) { SepeteEkle(); }
 
         
-        private void button22_Click_1(object sender, EventArgs e)
+        private void button22_Click_1(object sender, EventArgs e) // sepetteki ürün adedini arttır
         {
+            if (listView2.SelectedItems.Count > 0)
+            {
+                ListViewItem seciliSepetUrünü = listView2.SelectedItems[0];
 
-          
+           
+                string urunID = seciliSepetUrünü.Tag.ToString();
+
+                
+                int guncelStok = 0;
+               
+                    baglanti.Open();
+                    string stokSorgusu = "SELECT MevcutStok FROM Urunler WHERE UrunID = @id";
+                    using (SqlCommand komut = new SqlCommand(stokSorgusu, baglanti))
+                    {
+                        komut.Parameters.AddWithValue("@id", urunID);
+                        guncelStok = Convert.ToInt32(komut.ExecuteScalar());
+                    }      
+                    
+                int sepettekiAdet = int.Parse(seciliSepetUrünü.SubItems[2].Text);
+                decimal  uruntoplam= decimal.Parse(seciliSepetUrünü.SubItems[3].Text);
+                decimal urunfiyat = decimal.Parse(seciliSepetUrünü.SubItems[1].Text);
+
+                if (sepettekiAdet < guncelStok)
+                {
+                    sepettekiAdet++;
+                    uruntoplam = sepettekiAdet * urunfiyat;
+                    seciliSepetUrünü.SubItems[3].Text = uruntoplam.ToString();
+                    ToplamHesapla();
+                    seciliSepetUrünü.SubItems[2].Text = sepettekiAdet.ToString();
+                  
+                }
+                else
+                {
+                    MessageBox.Show($"Stok yetersiz! Maksimum stok: {guncelStok}", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen sepetten bir ürün seçin.");
+            }
+            baglanti.Close();
         }
 
         private void button21_Click(object sender, EventArgs e)
@@ -270,13 +312,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -310,13 +355,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -350,13 +398,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -390,13 +441,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -430,13 +484,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -470,13 +527,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -510,13 +570,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -550,13 +613,16 @@ namespace per101
                 while (oku.Read())
                 {
 
-                    // ListViewItem oluşturuyoruz
-                    ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
-                    ekle.SubItems.Add(oku["SatisFiyati"].ToString());
-                    ekle.SubItems.Add(oku["MevcutStok"].ToString());
-                    ekle.Tag = oku["UrunID"].ToString();
-                    // Listeye ekliyoruz
-                    listView1.Items.Add(ekle);
+
+                    if (Convert.ToInt32(oku["MevcutStok"]) > 0)
+                    {
+                        ListViewItem ekle = new ListViewItem(oku["MarkaAdi"].ToString() + " " + oku["UrunAdi"].ToString());
+                        ekle.SubItems.Add(oku["SatisFiyati"].ToString());
+                        ekle.SubItems.Add(oku["MevcutStok"].ToString());
+                        ekle.Tag = oku["UrunID"].ToString();
+                        // Listeye ekliyoruz
+                        listView1.Items.Add(ekle);
+                    }
                 }
                 oku.Close();
             }
@@ -579,6 +645,56 @@ namespace per101
 
             
 
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (listView2.SelectedItems.Count > 0)
+            {
+                ListViewItem seciliSepetUrünü = listView2.SelectedItems[0];
+
+
+                string urunID = seciliSepetUrünü.Tag.ToString();
+
+
+                int guncelStok = 0;
+
+                baglanti.Open();
+                string stokSorgusu = "SELECT MevcutStok FROM Urunler WHERE UrunID = @id";
+                using (SqlCommand komut = new SqlCommand(stokSorgusu, baglanti))
+                {
+                    komut.Parameters.AddWithValue("@id", urunID);
+                    guncelStok = Convert.ToInt32(komut.ExecuteScalar());
+                }
+
+                int sepettekiAdet = int.Parse(seciliSepetUrünü.SubItems[2].Text);
+                decimal uruntoplam = decimal.Parse(seciliSepetUrünü.SubItems[3].Text);
+                decimal urunfiyat = decimal.Parse(seciliSepetUrünü.SubItems[1].Text);
+
+                if (sepettekiAdet > 0)
+                {
+                    sepettekiAdet--;
+                    uruntoplam = sepettekiAdet * urunfiyat;
+                    seciliSepetUrünü.SubItems[3].Text = uruntoplam.ToString();
+                    ToplamHesapla();
+                    seciliSepetUrünü.SubItems[2].Text = sepettekiAdet.ToString();
+
+                }
+                else
+                {
+                    MessageBox.Show($"Alt sınıra ulaşıldı ! Eğer ürünü silmek istiyorsanız Sil Butonunu kullanın.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen sepetten bir ürün seçin.");
+            }
+            baglanti.Close();
         }
     }
 }
